@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="校园社区论坛" />
+    <meta name="author" content="" />
+    <title>期末考试复习资料分享 - 校园论坛</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/styles.css" rel="stylesheet" />
+    <script
+      src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 引入富文本编辑器 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .post-content {
+        font-size: 1.1rem;
+        line-height: 1.7;
+      }
+      .post-content img {
+        max-width: 100%;
+      }
+      .reply-item {
+        border-bottom: 1px solid #e3e6f0;
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+      }
+      .reply-item:last-child {
+        border-bottom: none;
+      }
+      .user-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+      .reply-metadata {
+        color: #6c757d;
+        font-size: 0.875rem;
+      }
+      .reply-actions a {
+        color: #6c757d;
+        margin-right: 1rem;
+        text-decoration: none;
+      }
+      .reply-actions a:hover {
+        color: #0d6efd;
+      }
+      .reply-form {
+        margin-top: 2rem;
+      }
+      .post-info {
+        background-color: #f8f9fa;
+        border-radius: 0.25rem;
+        padding: 10px 15px;
+        margin-bottom: 15px;
+      }
+      .post-actions {
+        margin: 15px 0;
+      }
+      .post-actions button {
+        margin-right: 10px;
+      }
+      .file-attachment {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #f1f3f5;
+        border-radius: 5px;
+      }
+      .file-attachment i {
+        font-size: 24px;
+        margin-right: 10px;
+      }
+      .file-attachment .file-info {
+        flex-grow: 1;
+      }
+      .file-attachment .file-name {
+        font-weight: bold;
+      }
+      .file-attachment .file-size {
+        color: #6c757d;
+        font-size: 0.875rem;
+      }
+      .file-attachment .file-actions {
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+      <!-- Navbar Brand-->
+      <a class="navbar-brand ps-3" href="index.html">校园社区</a>
+      <!-- Sidebar Toggle-->
+      <button
+        class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
+        id="sidebarToggle"
+        href="#!"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+      <!-- Navbar Search-->
+      <form
+        class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
+      >
+        <div class="input-group">
+          <input
+            class="form-control"
+            type="text"
+            placeholder="搜索帖子..."
+            aria-label="搜索帖子..."
+            aria-describedby="btnNavbarSearch"
+          />
+          <button class="btn btn-primary" id="btnNavbarSearch" type="button">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </form>
+      <!-- Navbar-->
+      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbarDropdown"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fas fa-user fa-fw"></i>
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdown"
+          >
+            <li><a class="dropdown-item" href="#!">个人设置</a></li>
+            <li><a class="dropdown-item" href="#!">活动记录</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="#!">退出登录</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <div id="layoutSidenav">
+      <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+          <div class="sb-sidenav-menu">
+            <div class="nav">
+              <div class="sb-sidenav-menu-heading">核心功能</div>
+              <a class="nav-link" href="index.html">
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-tachometer-alt"></i>
+                </div>
+                主页
+              </a>
+              <div class="sb-sidenav-menu-heading">交流平台</div>
+              <a
+                class="nav-link collapsed"
+                href="#"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseLayouts"
+                aria-expanded="false"
+                aria-controls="collapseLayouts"
+              >
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-columns"></i>
+                </div>
+                论坛
+                <div class="sb-sidenav-collapse-arrow">
+                  <i class="fas fa-angle-down"></i>
+                </div>
+              </a>
+              <div
+                class="collapse"
+                id="collapseLayouts"
+                aria-labelledby="headingOne"
+                data-bs-parent="#sidenavAccordion"
+              >
+                <nav class="sb-sidenav-menu-nested nav">
+                  <a class="nav-link" href="bbs.html">论坛首页</a>
+                  <a class="nav-link" href="post-create.html">发布新帖</a>
+                </nav>
+              </div>
+              <a
+                class="nav-link collapsed"
+                href="#"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapsePages"
+                aria-expanded="false"
+                aria-controls="collapsePages"
+              >
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-book-open"></i>
+                </div>
+                评课社区
+                <div class="sb-sidenav-collapse-arrow">
+                  <i class="fas fa-angle-down"></i>
+                </div>
+              </a>
+              <div
+                class="collapse"
+                id="collapsePages"
+                aria-labelledby="headingTwo"
+                data-bs-parent="#sidenavAccordion"
+              >
+                <nav
+                  class="sb-sidenav-menu-nested nav accordion"
+                  id="sidenavAccordionPages"
+                >
+                  <a
+                    class="nav-link collapsed"
+                    href="#"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#pagesCollapseAuth"
+                    aria-expanded="false"
+                    aria-controls="pagesCollapseAuth"
+                  >
+                    课程评价
+                    <div class="sb-sidenav-collapse-arrow">
+                      <i class="fas fa-angle-down"></i>
+                    </div>
+                  </a>
+                  <div
+                    class="collapse"
+                    id="pagesCollapseAuth"
+                    aria-labelledby="headingOne"
+                    data-bs-parent="#sidenavAccordionPages"
+                  >
+                    <nav class="sb-sidenav-menu-nested nav">
+                      <a class="nav-link" href="#!">必修课程</a>
+                      <a class="nav-link" href="#!">选修课程</a>
+                      <a class="nav-link" href="#!">通识课程</a>
+                    </nav>
+                  </div>
+                  <a
+                    class="nav-link collapsed"
+                    href="#"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#pagesCollapseError"
+                    aria-expanded="false"
+                    aria-controls="pagesCollapseError"
+                  >
+                    教师评价
+                    <div class="sb-sidenav-collapse-arrow">
+                      <i class="fas fa-angle-down"></i>
+                    </div>
+                  </a>
+                  <div
+                    class="collapse"
+                    id="pagesCollapseError"
+                    aria-labelledby="headingOne"
+                    data-bs-parent="#sidenavAccordionPages"
+                  >
+                    <nav class="sb-sidenav-menu-nested nav">
+                      <a class="nav-link" href="#!">按院系查找</a>
+                      <a class="nav-link" href="#!">按姓名查找</a>
+                      <a class="nav-link" href="#!">热门教师</a>
+                    </nav>
+                  </div>
+                </nav>
+              </div>
+              <div class="sb-sidenav-menu-heading">工具</div>
+              <a class="nav-link" href="charts.html">
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-chart-area"></i>
+                </div>
+                校园Myportal
+              </a>
+              <a class="nav-link" href="tables.html">
+                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                排课助手
+              </a>
+            </div>
+          </div>
+          <div class="sb-sidenav-footer">
+            <div class="small">当前登录:</div>
+            用户昵称
+          </div>
+        </nav>
+      </div>
+      <div id="layoutSidenav_content">
+        <main>
+          <div class="container-fluid px-4">
+            <ol class="breadcrumb mb-4 mt-4">
+              <li class="breadcrumb-item"><a href="index.html">主页</a></li>
+              <li class="breadcrumb-item"><a href="bbs.html">论坛</a></li>
+              <li class="breadcrumb-item active">帖子详情</li>
+            </ol>
+
+            <!-- 帖子详情 -->
+            <div class="card mb-4">
+              <div class="card-body">
+                <h2 class="card-title">期末考试复习资料分享，大家一起加油！</h2>
+
+                <div
+                  class="post-info d-flex justify-content-between align-items-center"
+                >
+                  <div>
+                    <div class="d-flex align-items-center">
+                      <img
+                        src="https://via.placeholder.com/40"
+                        class="rounded-circle me-2"
+                        alt="用户头像"
+                      />
+                      <div>
+                        <div>
+                          <strong>学霸001</strong>
+                          <span class="badge bg-info">资深用户</span>
+                        </div>
+                        <div class="text-muted">发布于：2023-10-15 13:45</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="badge bg-secondary me-1">学术交流</span>
+                    <span class="badge bg-info me-1">考试</span>
+                    <span class="badge bg-success">资料分享</span>
+                  </div>
+                </div>
+
+                <div class="post-content mt-4">
+                  <p>
+                    大家好，期末考试将至，我整理了一些重要课程的复习资料，希望对大家有所帮助！
+                  </p>
+
+                  <h4>高等数学</h4>
+                  <p>
+                    高数的复习重点在于理解概念和掌握计算方法。我整理了几套往年试卷和习题解析，覆盖了大部分考点。复习时建议先巩固基础概念，再通过例题加深理解。
+                  </p>
+
+                  <h4>大学物理</h4>
+                  <p>
+                    物理考试除了基础知识点外，还会涉及一些综合应用题。建议重点关注力学、电磁学和量子力学的基本概念和公式推导。我总结的物理考点清单可以帮助大家有针对性地复习。
+                  </p>
+
+                  <h4>数据结构</h4>
+                  <p>
+                    数据结构考试需要掌握各种数据结构的特性和适用场景。我整理的笔记里包含了常见算法的时间复杂度分析和典型题目的解题思路，希望对计算机专业的同学有所帮助。
+                  </p>
+
+                  <div class="alert alert-info mt-3">
+                    <i class="fas fa-info-circle me-2"></i>
+                    我已将所有资料打包上传，有需要的同学可以下载查看。如果有任何问题，可以在评论区提出，我会尽量解答。
+                  </div>
+
+                  <div class="mt-3">
+                    <p><strong>资料下载：</strong></p>
+                    <div class="file-attachment">
+                      <i class="fas fa-file-pdf"></i>
+                      <div class="file-info">
+                        <div class="file-name">高数复习资料汇总.pdf</div>
+                        <div class="file-size">(2.5MB)</div>
+                      </div>
+                      <div class="file-actions">
+                        <button class="btn btn-outline-primary btn-sm">
+                          下载
+                        </button>
+                      </div>
+                    </div>
+                    <div class="file-attachment">
+                      <i class="fas fa-file-archive"></i>
+                      <div class="file-info">
+                        <div class="file-name">物理考点清单和例题.zip</div>
+                        <div class="file-size">(3.1MB)</div>
+                      </div>
+                      <div class="file-actions">
+                        <button class="btn btn-outline-primary btn-sm">
+                          下载
+                        </button>
+                      </div>
+                    </div>
+                    <div class="file-attachment">
+                      <i class="fas fa-file-alt"></i>
+                      <div class="file-info">
+                        <div class="file-name">数据结构复习笔记.docx</div>
+                        <div class="file-size">(1.8MB)</div>
+                      </div>
+                      <div class="file-actions">
+                        <button class="btn btn-outline-primary btn-sm">
+                          下载
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p class="mt-3">最后，祝大家考试顺利，取得好成绩！</p>
+                </div>
+
+                <div
+                  class="post-actions d-flex align-items-center justify-content-between mt-4 pt-3 border-top"
+                >
+                  <div>
+                    <button
+                      class="btn btn-outline-primary btn-sm me-2"
+                      id="likePost"
+                    >
+                      <i class="far fa-thumbs-up me-1"></i> 赞 (42)
+                    </button>
+                    <button
+                      class="btn btn-outline-secondary btn-sm me-2"
+                      id="collectPost"
+                    >
+                      <i class="far fa-star me-1"></i> 收藏 (28)
+                    </button>
+                    <button
+                      class="btn btn-outline-secondary btn-sm"
+                      id="sharePost"
+                    >
+                      <i class="fas fa-share me-1"></i> 分享
+                    </button>
+                  </div>
+                  <div>
+                    <button class="btn btn-primary btn-sm" id="replyPost">
+                      <i class="fas fa-reply me-1"></i> 回复
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 回复区域 -->
+            <div class="card mb-4">
+              <div
+                class="card-header d-flex justify-content-between align-items-center"
+              >
+                <div><i class="fas fa-comments me-1"></i> 回复 (5)</div>
+                <div class="dropdown">
+                  <button
+                    class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                    type="button"
+                    id="sortReplies"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    排序方式
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="sortReplies">
+                    <li><a class="dropdown-item active" href="#">默认</a></li>
+                    <li><a class="dropdown-item" href="#">最新</a></li>
+                    <li><a class="dropdown-item" href="#">最早</a></li>
+                    <li><a class="dropdown-item" href="#">点赞最多</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="card-body">
+                <!-- 回复1 -->
+                <div class="reply-item" id="reply-1">
+                  <div class="d-flex">
+                    <div class="me-3">
+                      <img
+                        src="https://via.placeholder.com/50"
+                        class="user-avatar"
+                        alt="用户头像"
+                      />
+                    </div>
+                    <div class="flex-grow-1">
+                      <div
+                        class="d-flex justify-content-between align-items-center mb-2"
+                      >
+                        <div>
+                          <strong>物理学霸</strong>
+                          <span class="badge bg-secondary">活跃用户</span>
+                          <div class="reply-metadata">2023-10-15 14:20</div>
+                        </div>
+                        <div class="text-muted">#1</div>
+                      </div>
+
+                      <div class="reply-content">
+                        <p>
+                          感谢分享！我正为物理考试犯愁呢，这些资料对我很有帮助。有关电磁学部分，你推荐重点关注哪些章节？
+                        </p>
+                      </div>
+
+                      <div class="reply-actions mt-2">
+                        <a href="#" class="reply-action-like"
+                          ><i class="far fa-thumbs-up me-1"></i>点赞 (8)</a
+                        >
+                        <a href="#" class="reply-action-reply"
+                          ><i class="fas fa-reply me-1"></i>回复</a
+                        >
+                        <a href="#" class="reply-action-quote"
+                          ><i class="fas fa-quote-right me-1"></i>引用</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 回复2 -->
+                <div class="reply-item" id="reply-2">
+                  <div class="d-flex">
+                    <div class="me-3">
+                      <img
+                        src="https://via.placeholder.com/50"
+                        class="user-avatar"
+                        alt="用户头像"
+                      />
+                    </div>
+                    <div class="flex-grow-1">
+                      <div
+                        class="d-flex justify-content-between align-items-center mb-2"
+                      >
+                        <div>
+                          <strong>学霸001</strong>
+                          <span class="badge bg-info">资深用户</span>
+                          <div class="reply-metadata">2023-10-15 15:05</div>
+                        </div>
+                        <div class="text-muted">#2</div>
+                      </div>
+
+                      <div class="reply-content">
+                        <blockquote
+                          class="border-start border-primary ps-3 text-muted"
+                        >
+                          <small
+                            >引用
+                            物理学霸：感谢分享！我正为物理考试犯愁呢，这些资料对我很有帮助。有关电磁学部分，你推荐重点关注哪些章节？</small
+                          >
+                        </blockquote>
+                        <p>
+                          电磁学建议重点关注麦克斯韦方程组及其应用，电磁场能量和动量，以及电磁波的传播特性。这几部分在考试中经常以计算题的形式出现，理解好基本概念后多做题是关键。
+                        </p>
+                        <p>
+                          我在资料包中有专门的电磁学习题详解，你可以着重看一下。
+                        </p>
+                      </div>
+
+                      <div class="reply-actions mt-2">
+                        <a href="#" class="reply-action-like"
+                          ><i class="far fa-thumbs-up me-1"></i>点赞 (5)</a
+                        >
+                        <a href="#" class="reply-action-reply"
+                          ><i class="fas fa-reply me-1"></i>回复</a
+                        >
+                        <a href="#" class="reply-action-quote"
+                          ><i class="fas fa-quote-right me-1"></i>引用</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 回复3 -->
+                <div class="reply-item" id="reply-3">
+                  <div class="d-flex">
+                    <div class="me-3">
+                      <img
+                        src="https://via.placeholder.com/50"
+                        class="user-avatar"
+                        alt="用户头像"
+                      />
+                    </div>
+                    <div class="flex-grow-1">
+                      <div
+                        class="d-flex justify-content-between align-items-center mb-2"
+                      >
+                        <div>
+                          <strong>计算机菜鸟</strong>
+                          <div class="reply-metadata">2023-10-15 16:38</div>
+                        </div>
+                        <div class="text-muted">#3</div>
+                      </div>
+
+                      <div class="reply-content">
+                        <p>
+                          感谢分享数据结构的资料！我想问一下，红黑树和AVL树的区别是考试重点吗？资料里有相关的样题吗？
+                        </p>
+                      </div>
+
+                      <div class="reply-actions mt-2">
+                        <a href="#" class="reply-action-like"
+                          ><i class="far fa-thumbs-up me-1"></i>点赞 (3)</a
+                        >
+                        <a href="#" class="reply-action-reply"
+                          ><i class="fas fa-reply me-1"></i>回复</a
+                        >
+                        <a href="#" class="reply-action-quote"
+                          ><i class="fas fa-quote-right me-1"></i>引用</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 回复4 -->
+                <div class="reply-item" id="reply-4">
+                  <div class="d-flex">
+                    <div class="me-3">
+                      <img
+                        src="https://via.placeholder.com/50"
+                        class="user-avatar"
+                        alt="用户头像"
+                      />
+                    </div>
+                    <div class="flex-grow-1">
+                      <div
+                        class="d-flex justify-content-between align-items-center mb-2"
+                      >
+                        <div>
+                          <strong>数学爱好者</strong>
+                          <div class="reply-metadata">2023-10-15 17:25</div>
+                        </div>
+                        <div class="text-muted">#4</div>
+                      </div>
+
+                      <div class="reply-content">
+                        <p>
+                          高数部分的资料整理得非常清晰，特别是对多元函数积分的解释，让我对这部分的理解更深入了。不过我想问一下，有没有针对级数部分的进阶练习？这部分我总是搞不太清楚。
+                        </p>
+                      </div>
+
+                      <div class="reply-actions mt-2">
+                        <a href="#" class="reply-action-like"
+                          ><i class="far fa-thumbs-up me-1"></i>点赞 (6)</a
+                        >
+                        <a href="#" class="reply-action-reply"
+                          ><i class="fas fa-reply me-1"></i>回复</a
+                        >
+                        <a href="#" class="reply-action-quote"
+                          ><i class="fas fa-quote-right me-1"></i>引用</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 回复5 -->
+                <div class="reply-item" id="reply-5">
+                  <div class="d-flex">
+                    <div class="me-3">
+                      <img
+                        src="https://via.placeholder.com/50"
+                        class="user-avatar"
+                        alt="用户头像"
+                      />
+                    </div>
+                    <div class="flex-grow-1">
+                      <div
+                        class="d-flex justify-content-between align-items-center mb-2"
+                      >
+                        <div>
+                          <strong>学霸001</strong>
+                          <span class="badge bg-info">资深用户</span>
+                          <div class="reply-metadata">2023-10-15 18:40</div>
+                        </div>
+                        <div class="text-muted">#5</div>
+                      </div>
+
+                      <div class="reply-content">
+                        <blockquote
+                          class="border-start border-primary ps-3 text-muted"
+                        >
+                          <small
+                            >引用
+                            计算机菜鸟：感谢分享数据结构的资料！我想问一下，红黑树和AVL树的区别是考试重点吗？资料里有相关的样题吗？</small
+                          >
+                        </blockquote>
+                        <p>
+                          红黑树和AVL树的区别确实是考试重点，特别是在时间复杂度和平衡因子方面的不同。资料第37-42页有详细的比较和样题，建议重点看一下。
+                        </p>
+
+                        <blockquote
+                          class="border-start border-primary ps-3 text-muted mt-3"
+                        >
+                          <small
+                            >引用
+                            数学爱好者：高数部分的资料整理得非常清晰，特别是对多元函数积分的解释，让我对这部分的理解更深入了。不过我想问一下，有没有针对级数部分的进阶练习？这部分我总是搞不太清楚。</small
+                          >
+                        </blockquote>
+                        <p>
+                          谢谢你的反馈！关于级数部分，我在资料包的附录A中增加了一些进阶练习，主要涉及幂级数、傅里叶级数和收敛性判断。如果你还需要更多练习，我可以私信发给你一些我收集的题目。
+                        </p>
+                      </div>
+
+                      <div class="reply-actions mt-2">
+                        <a href="#" class="reply-action-like"
+                          ><i class="far fa-thumbs-up me-1"></i>点赞 (10)</a
+                        >
+                        <a href="#" class="reply-action-reply"
+                          ><i class="fas fa-reply me-1"></i>回复</a
+                        >
+                        <a href="#" class="reply-action-quote"
+                          ><i class="fas fa-quote-right me-1"></i>引用</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 分页 -->
+                <nav aria-label="Page navigation" class="mt-4">
+                  <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                      <a
+                        class="page-link"
+                        href="#"
+                        tabindex="-1"
+                        aria-disabled="true"
+                        >上一页</a
+                      >
+                    </li>
+                    <li class="page-item active">
+                      <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">下一页</a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+
+            <!-- 回复框 -->
+            <div class="card mb-4">
+              <div class="card-header">
+                <i class="fas fa-reply me-1"></i> 发表回复
+              </div>
+              <div class="card-body">
+                <form id="replyForm">
+                  <div class="mb-3">
+                    <div id="replyContent"></div>
+                  </div>
+
+                  <div class="form-check mb-3">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="notifyMe"
+                    />
+                    <label class="form-check-label" for="notifyMe"
+                      >有新回复时通知我</label
+                    >
+                  </div>
+
+                  <div class="d-flex justify-content-between">
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary"
+                      id="uploadAttachment"
+                    >
+                      <i class="fas fa-paperclip me-1"></i> 添加附件
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                      <i class="fas fa-paper-plane me-1"></i> 发表回复
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </main>
+        <!-- 页脚 -->
+        <footer class="py-4 bg-light mt-auto">
+          <div class="container-fluid px-4">
+            <div
+              class="d-flex align-items-center justify-content-between small"
+            >
+              <div class="text-muted">Copyright &copy; 校园社区 2023</div>
+              <div>
+                <a href="#">隐私政策</a>
+                &middot;
+                <a href="#">条款 &amp; 条件</a>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/scripts.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-zh-CN.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // 初始化富文本编辑器
+        $("#replyContent").summernote({
+          placeholder: "请输入回复内容",
+          tabsize: 2,
+          height: 200,
+          lang: "zh-CN",
+          toolbar: [
+            ["style", ["style"]],
+            ["font", ["bold", "underline", "clear"]],
+            ["color", ["color"]],
+            ["para", ["ul", "ol", "paragraph"]],
+            ["table", ["table"]],
+            ["insert", ["link", "picture"]],
+            ["view", ["fullscreen", "codeview"]],
+          ],
+        });
+
+        // 点赞功能
+        $(".reply-action-like").click(function (e) {
+          e.preventDefault();
+          let likeText = $(this).text();
+          let likesCount = parseInt(likeText.match(/\d+/)[0]);
+          if ($(this).hasClass("text-primary")) {
+            $(this).removeClass("text-primary");
+            $(this).html(
+              '<i class="far fa-thumbs-up me-1"></i>点赞 (' +
+                (likesCount - 1) +
+                ")"
+            );
+          } else {
+            $(this).addClass("text-primary");
+            $(this).html(
+              '<i class="fas fa-thumbs-up me-1"></i>点赞 (' +
+                (likesCount + 1) +
+                ")"
+            );
+          }
+        });
+
+        // 回复功能
+        $(".reply-action-reply").click(function (e) {
+          e.preventDefault();
+          // 滚动到回复框
+          $("html, body").animate(
+            {
+              scrollTop: $("#replyContent").offset().top - 100,
+            },
+            500
+          );
+          // 聚焦编辑器
+          $("#replyContent").summernote("focus");
+        });
+
+        // 引用功能
+        $(".reply-action-quote").click(function (e) {
+          e.preventDefault();
+          let replyContent = $(this)
+            .closest(".flex-grow-1")
+            .find(".reply-content p:first")
+            .text();
+          let author = $(this).closest(".flex-grow-1").find("strong").text();
+
+          // 插入引用到编辑器
+          $("#replyContent").summernote(
+            "code",
+            '<blockquote class="border-start border-primary ps-3 text-muted mb-3"><small>引用 ' +
+              author +
+              "：" +
+              replyContent +
+              "</small></blockquote><p><br></p>"
+          );
+
+          // 滚动到回复框
+          $("html, body").animate(
+            {
+              scrollTop: $("#replyContent").offset().top - 100,
+            },
+            500
+          );
+          // 聚焦编辑器
+          $("#replyContent").summernote("focus");
+        });
+
+        // 帖子点赞
+        $("#likePost").click(function () {
+          if ($(this).hasClass("btn-primary")) {
+            $(this).removeClass("btn-primary").addClass("btn-outline-primary");
+            $(this).html('<i class="far fa-thumbs-up me-1"></i> 赞 (41)');
+          } else {
+            $(this).removeClass("btn-outline-primary").addClass("btn-primary");
+            $(this).html('<i class="fas fa-thumbs-up me-1"></i> 赞 (42)');
+          }
+        });
+
+        // 帖子收藏
+        $("#collectPost").click(function () {
+          if ($(this).hasClass("btn-warning")) {
+            $(this)
+              .removeClass("btn-warning")
+              .addClass("btn-outline-secondary");
+            $(this).html('<i class="far fa-star me-1"></i> 收藏 (28)');
+          } else {
+            $(this)
+              .removeClass("btn-outline-secondary")
+              .addClass("btn-warning");
+            $(this).html('<i class="fas fa-star me-1"></i> 收藏 (29)');
+          }
+        });
+
+        // 表单提交
+        $("#replyForm").submit(function (e) {
+          e.preventDefault();
+
+          // 获取回复内容
+          let content = $("#replyContent").summernote("code");
+
+          if ($(content).text().trim() === "") {
+            alert("请输入回复内容");
+            return;
+          }
+
+          // 这里应该是提交到后端的代码
+          // 模拟提交成功
+          alert("回复发表成功！");
+
+          // 清空编辑器
+          $("#replyContent").summernote("code", "");
+
+          // 刷新页面或添加新回复到列表
+          // location.reload();
+        });
+      });
+    </script>
+  </body>
+</html>

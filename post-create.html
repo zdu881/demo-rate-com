@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="校园社区论坛" />
+    <meta name="author" content="" />
+    <title>发布新帖 - 校园论坛</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/styles.css" rel="stylesheet" />
+    <script
+      src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 引入富文本编辑器 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .tag-selector .badge {
+        cursor: pointer;
+        margin-right: 5px;
+        margin-bottom: 5px;
+      }
+      .tag-selector .badge.selected {
+        box-shadow: 0 0 0 2px #fff, 0 0 0 4px #0d6efd;
+      }
+      .file-upload {
+        border: 2px dashed #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        transition: all 0.3s;
+      }
+      .file-upload:hover {
+        border-color: #0d6efd;
+        background-color: #f8f9fa;
+      }
+      .file-upload-icon {
+        font-size: 40px;
+        color: #6c757d;
+      }
+      .file-item {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+      .file-item-icon {
+        font-size: 24px;
+        margin-right: 10px;
+        color: #6c757d;
+      }
+      .file-item-name {
+        flex-grow: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .file-item-actions {
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+      <!-- Navbar Brand-->
+      <a class="navbar-brand ps-3" href="index.html">校园社区</a>
+      <!-- Sidebar Toggle-->
+      <button
+        class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
+        id="sidebarToggle"
+        href="#!"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+      <!-- Navbar Search-->
+      <form
+        class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
+      >
+        <div class="input-group">
+          <input
+            class="form-control"
+            type="text"
+            placeholder="搜索帖子..."
+            aria-label="搜索帖子..."
+            aria-describedby="btnNavbarSearch"
+          />
+          <button class="btn btn-primary" id="btnNavbarSearch" type="button">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </form>
+      <!-- Navbar-->
+      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbarDropdown"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fas fa-user fa-fw"></i>
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdown"
+          >
+            <li><a class="dropdown-item" href="#!">个人设置</a></li>
+            <li><a class="dropdown-item" href="#!">活动记录</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="#!">退出登录</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <div id="layoutSidenav">
+      <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+          <div class="sb-sidenav-menu">
+            <div class="nav">
+              <div class="sb-sidenav-menu-heading">核心功能</div>
+              <a class="nav-link" href="index.html">
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-tachometer-alt"></i>
+                </div>
+                主页
+              </a>
+              <div class="sb-sidenav-menu-heading">交流平台</div>
+              <a
+                class="nav-link collapsed"
+                href="#"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseLayouts"
+                aria-expanded="false"
+                aria-controls="collapseLayouts"
+              >
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-columns"></i>
+                </div>
+                论坛
+                <div class="sb-sidenav-collapse-arrow">
+                  <i class="fas fa-angle-down"></i>
+                </div>
+              </a>
+              <div
+                class="collapse"
+                id="collapseLayouts"
+                aria-labelledby="headingOne"
+                data-bs-parent="#sidenavAccordion"
+              >
+                <nav class="sb-sidenav-menu-nested nav">
+                  <a class="nav-link" href="bbs.html">论坛首页</a>
+                  <a class="nav-link" href="post-create.html">发布新帖</a>
+                </nav>
+              </div>
+              <a
+                class="nav-link collapsed"
+                href="#"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapsePages"
+                aria-expanded="false"
+                aria-controls="collapsePages"
+              >
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-book-open"></i>
+                </div>
+                评课社区
+                <div class="sb-sidenav-collapse-arrow">
+                  <i class="fas fa-angle-down"></i>
+                </div>
+              </a>
+              <div
+                class="collapse"
+                id="collapsePages"
+                aria-labelledby="headingTwo"
+                data-bs-parent="#sidenavAccordion"
+              >
+                <nav
+                  class="sb-sidenav-menu-nested nav accordion"
+                  id="sidenavAccordionPages"
+                >
+                  <a
+                    class="nav-link collapsed"
+                    href="#"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#pagesCollapseAuth"
+                    aria-expanded="false"
+                    aria-controls="pagesCollapseAuth"
+                  >
+                    课程评价
+                    <div class="sb-sidenav-collapse-arrow">
+                      <i class="fas fa-angle-down"></i>
+                    </div>
+                  </a>
+                  <div
+                    class="collapse"
+                    id="pagesCollapseAuth"
+                    aria-labelledby="headingOne"
+                    data-bs-parent="#sidenavAccordionPages"
+                  >
+                    <nav class="sb-sidenav-menu-nested nav">
+                      <a class="nav-link" href="#!">必修课程</a>
+                      <a class="nav-link" href="#!">选修课程</a>
+                      <a class="nav-link" href="#!">通识课程</a>
+                    </nav>
+                  </div>
+                  <a
+                    class="nav-link collapsed"
+                    href="#"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#pagesCollapseError"
+                    aria-expanded="false"
+                    aria-controls="pagesCollapseError"
+                  >
+                    教师评价
+                    <div class="sb-sidenav-collapse-arrow">
+                      <i class="fas fa-angle-down"></i>
+                    </div>
+                  </a>
+                  <div
+                    class="collapse"
+                    id="pagesCollapseError"
+                    aria-labelledby="headingOne"
+                    data-bs-parent="#sidenavAccordionPages"
+                  >
+                    <nav class="sb-sidenav-menu-nested nav">
+                      <a class="nav-link" href="#!">按院系查找</a>
+                      <a class="nav-link" href="#!">按姓名查找</a>
+                      <a class="nav-link" href="#!">热门教师</a>
+                    </nav>
+                  </div>
+                </nav>
+              </div>
+              <div class="sb-sidenav-menu-heading">工具</div>
+              <a class="nav-link" href="charts.html">
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-chart-area"></i>
+                </div>
+                校园Myportal
+              </a>
+              <a class="nav-link" href="tables.html">
+                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                排课助手
+              </a>
+            </div>
+          </div>
+          <div class="sb-sidenav-footer">
+            <div class="small">当前登录:</div>
+            用户昵称
+          </div>
+        </nav>
+      </div>
+      <div id="layoutSidenav_content">
+        <main>
+          <div class="container-fluid px-4">
+            <h1 class="mt-4">发布新帖</h1>
+            <ol class="breadcrumb mb-4">
+              <li class="breadcrumb-item"><a href="index.html">主页</a></li>
+              <li class="breadcrumb-item"><a href="bbs.html">论坛</a></li>
+              <li class="breadcrumb-item active">发布新帖</li>
+            </ol>
+
+            <div class="card mb-4">
+              <div class="card-header">
+                <i class="fas fa-edit me-1"></i>
+                编写你的帖子
+              </div>
+              <div class="card-body">
+                <form id="postForm">
+                  <div class="mb-3">
+                    <label for="postTitle" class="form-label">标题</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="postTitle"
+                      placeholder="请输入帖子标题"
+                      required
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="postContent" class="form-label">内容</label>
+                    <div id="postContent"></div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label">选择标签 (最多选择3个)</label>
+                    <div class="tag-selector d-flex flex-wrap">
+                      <span class="badge bg-primary" data-value="校园生活"
+                        >校园生活</span
+                      >
+                      <span class="badge bg-secondary" data-value="学术交流"
+                        >学术交流</span
+                      >
+                      <span class="badge bg-success" data-value="社团活动"
+                        >社团活动</span
+                      >
+                      <span class="badge bg-danger" data-value="就业创业"
+                        >就业创业</span
+                      >
+                      <span class="badge bg-warning text-dark" data-value="美食"
+                        >美食</span
+                      >
+                      <span class="badge bg-info" data-value="考试">考试</span>
+                      <span class="badge bg-dark" data-value="实习">实习</span>
+                      <span class="badge bg-secondary" data-value="选课"
+                        >选课</span
+                      >
+                      <span class="badge bg-primary" data-value="宿舍"
+                        >宿舍</span
+                      >
+                      <span class="badge bg-success" data-value="户外活动"
+                        >户外活动</span
+                      >
+                      <span class="badge bg-danger" data-value="考研"
+                        >考研</span
+                      >
+                      <span class="badge bg-info" data-value="生活技巧"
+                        >生活技巧</span
+                      >
+                      <span class="badge bg-warning text-dark" data-value="健身"
+                        >健身</span
+                      >
+                      <span class="badge bg-primary" data-value="招新"
+                        >招新</span
+                      >
+                      <span class="badge bg-success" data-value="经验分享"
+                        >经验分享</span
+                      >
+                    </div>
+                    <input
+                      type="hidden"
+                      id="selectedTags"
+                      name="selectedTags"
+                    />
+                    <div id="tagHelp" class="form-text">
+                      点击选择标签，再次点击取消选择
+                    </div>
+                  </div>
+
+                  <!-- 附件上传区域 -->
+                  <div class="mb-3">
+                    <label class="form-label">上传附件</label>
+                    <div class="file-upload" id="dropZone">
+                      <div class="file-upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                      </div>
+                      <div class="mt-2">
+                        拖放文件到此处或
+                        <label class="text-primary" style="cursor: pointer">
+                          点击选择文件
+                          <input
+                            type="file"
+                            multiple
+                            id="fileInput"
+                            style="display: none"
+                          />
+                        </label>
+                      </div>
+                      <div class="small text-muted mt-1">
+                        支持的文件格式：PDF, Word, Excel, ZIP, 图片等 (最大10MB)
+                      </div>
+                    </div>
+                    <div id="fileList" class="mt-3"></div>
+                  </div>
+
+                  <!-- 帖子设置 -->
+                  <div class="card mb-4">
+                    <div class="card-header">
+                      <i class="fas fa-cog me-1"></i>
+                      帖子设置
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3 form-check">
+                            <input
+                              type="checkbox"
+                              class="form-check-input"
+                              id="notifyReplies"
+                              checked
+                            />
+                            <label class="form-check-label" for="notifyReplies"
+                              >有回复时通知我</label
+                            >
+                          </div>
+                          <div class="mb-3 form-check">
+                            <input
+                              type="checkbox"
+                              class="form-check-input"
+                              id="allowComment"
+                              checked
+                            />
+                            <label class="form-check-label" for="allowComment"
+                              >允许评论</label
+                            >
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3 form-check">
+                            <input
+                              type="checkbox"
+                              class="form-check-input"
+                              id="anonymousPost"
+                            />
+                            <label class="form-check-label" for="anonymousPost"
+                              >匿名发布</label
+                            >
+                            <div class="form-text">
+                              选择此项后，其他用户将无法看到您的用户名
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">谁可以看到这个帖子</label>
+                        <select class="form-select" id="postVisibility">
+                          <option value="public" selected>所有人</option>
+                          <option value="registered">仅注册用户</option>
+                          <option value="friends">仅我的好友</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex justify-content-between">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      onclick="window.history.back();"
+                    >
+                      取消
+                    </button>
+                    <div>
+                      <button
+                        type="button"
+                        class="btn btn-outline-primary me-2"
+                        id="saveAsDraft"
+                      >
+                        保存草稿
+                      </button>
+                      <button type="submit" class="btn btn-primary">
+                        发布帖子
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="card mb-4">
+              <div class="card-header">
+                <i class="fas fa-info-circle me-1"></i>
+                发帖指南
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5>发帖规范</h5>
+                    <ul>
+                      <li>请遵守校园社区规则和相关法律法规</li>
+                      <li>请勿发布含有敏感内容、广告或垃圾信息</li>
+                      <li>尊重他人，不要发布侮辱他人或挑衅性内容</li>
+                      <li>请给帖子选择合适的标签，以便他人查找</li>
+                    </ul>
+                  </div>
+                  <div class="col-md-6">
+                    <h5>如何获得更多回复</h5>
+                    <ul>
+                      <li>使用清晰、具体的标题</li>
+                      <li>内容尽量详细，条理清晰</li>
+                      <li>选择正确的标签，增加曝光率</li>
+                      <li>回复他人的帖子，增加社区活跃度</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- 页脚 -->
+        <footer class="py-4 bg-light mt-auto">
+          <div class="container-fluid px-4">
+            <div
+              class="d-flex align-items-center justify-content-between small"
+            >
+              <div class="text-muted">Copyright &copy; 校园社区 2023</div>
+              <div>
+                <a href="#">隐私政策</a>
+                &middot;
+                <a href="#">条款 &amp; 条件</a>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/scripts.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-zh-CN.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // 初始化富文本编辑器
+        $("#postContent").summernote({
+          placeholder: "请输入帖子内容",
+          tabsize: 2,
+          height: 300,
+          lang: "zh-CN",
+          toolbar: [
+            ["style", ["style"]],
+            ["font", ["bold", "underline", "clear"]],
+            ["color", ["color"]],
+            ["para", ["ul", "ol", "paragraph"]],
+            ["table", ["table"]],
+            ["insert", ["link", "picture"]],
+            ["view", ["fullscreen", "codeview", "help"]],
+          ],
+        });
+
+        // 标签选择功能
+        $(".tag-selector .badge").click(function () {
+          let maxTags = 3;
+          let selectedCount = $(".tag-selector .badge.selected").length;
+
+          if ($(this).hasClass("selected")) {
+            // 取消选择
+            $(this).removeClass("selected");
+          } else if (selectedCount < maxTags) {
+            // 选择新标签
+            $(this).addClass("selected");
+          } else {
+            alert("最多只能选择3个标签");
+            return;
+          }
+
+          // 更新隐藏字段
+          updateSelectedTags();
+        });
+
+        // 更新隐藏字段中的标签值
+        function updateSelectedTags() {
+          let tags = [];
+          $(".tag-selector .badge.selected").each(function () {
+            tags.push($(this).data("value"));
+          });
+          $("#selectedTags").val(tags.join(","));
+        }
+
+        // 文件上传相关功能
+        let files = [];
+
+        // 点击选择文件
+        $("#fileInput").on("change", function (e) {
+          handleFiles(e.target.files);
+        });
+
+        // 拖放文件
+        let dropZone = document.getElementById("dropZone");
+
+        dropZone.addEventListener("dragover", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          $(this).addClass("bg-light");
+        });
+
+        dropZone.addEventListener("dragleave", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          $(this).removeClass("bg-light");
+        });
+
+        dropZone.addEventListener("drop", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          $(this).removeClass("bg-light");
+
+          if (e.dataTransfer.files.length > 0) {
+            handleFiles(e.dataTransfer.files);
+          }
+        });
+
+        // 处理文件
+        function handleFiles(selectedFiles) {
+          for (let i = 0; i < selectedFiles.length; i++) {
+            let file = selectedFiles[i];
+
+            // 检查文件大小
+            if (file.size > 10 * 1024 * 1024) {
+              alert("文件 " + file.name + " 太大，不能超过10MB");
+              continue;
+            }
+
+            // 添加到文件列表
+            files.push(file);
+            addFileToList(file, files.length - 1);
+          }
+        }
+
+        // 添加文件到列表
+        function addFileToList(file, index) {
+          let fileIcon;
+          let fileType = file.name.split(".").pop().toLowerCase();
+
+          if (["jpg", "jpeg", "png", "gif"].includes(fileType)) {
+            fileIcon = "fa-file-image";
+          } else if (["doc", "docx"].includes(fileType)) {
+            fileIcon = "fa-file-word";
+          } else if (["xls", "xlsx"].includes(fileType)) {
+            fileIcon = "fa-file-excel";
+          } else if (fileType === "pdf") {
+            fileIcon = "fa-file-pdf";
+          } else if (["zip", "rar", "7z"].includes(fileType)) {
+            fileIcon = "fa-file-archive";
+          } else {
+            fileIcon = "fa-file";
+          }
+
+          let fileSize = formatFileSize(file.size);
+
+          let fileItem = `
+            <div class="file-item" data-index="${index}">
+              <div class="file-item-icon">
+                <i class="fas ${fileIcon}"></i>
+              </div>
+              <div class="file-item-name">
+                ${file.name}
+              </div>
+              <div class="text-muted small me-3">
+                ${fileSize}
+              </div>
+              <div class="file-item-actions">
+                <button type="button" class="btn btn-sm btn-outline-danger remove-file" data-index="${index}">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          `;
+
+          $("#fileList").append(fileItem);
+        }
+
+        // 删除文件
+        $(document).on("click", ".remove-file", function () {
+          let index = $(this).data("index");
+          files[index] = null; // 标记为已删除
+          $(this)
+            .closest(".file-item")
+            .fadeOut(300, function () {
+              $(this).remove();
+            });
+        });
+
+        // 格式化文件大小
+        function formatFileSize(bytes) {
+          if (bytes === 0) return "0 Bytes";
+
+          const k = 1024;
+          const sizes = ["Bytes", "KB", "MB", "GB"];
+          const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+          return (
+            parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
+          );
+        }
+
+        // 表单提交
+        $("#postForm").submit(function (e) {
+          e.preventDefault();
+
+          // 验证标题
+          if ($("#postTitle").val().trim() === "") {
+            alert("请输入帖子标题");
+            $("#postTitle").focus();
+            return;
+          }
+
+          // 验证内容
+          let content = $("#postContent").summernote("code");
+          if ($(content).text().trim() === "") {
+            alert("请输入帖子内容");
+            $("#postContent").summernote("focus");
+            return;
+          }
+
+          // 验证标签
+          if ($("#selectedTags").val() === "") {
+            alert("请至少选择一个标签");
+            return;
+          }
+
+          // 处理文件上传
+          let validFiles = files.filter((file) => file !== null);
+
+          // 创建表单数据
+          let formData = new FormData();
+          formData.append("title", $("#postTitle").val());
+          formData.append("content", content);
+          formData.append("tags", $("#selectedTags").val());
+          formData.append("notifyReplies", $("#notifyReplies").is(":checked"));
+          formData.append("allowComment", $("#allowComment").is(":checked"));
+          formData.append("anonymousPost", $("#anonymousPost").is(":checked"));
+          formData.append("visibility", $("#postVisibility").val());
+
+          // 添加文件
+          validFiles.forEach((file, index) => {
+            formData.append("file" + index, file);
+          });
+
+          // 这里应该是提交到后端的代码
+          // 在实际项目中使用AJAX发送formData
+
+          // 模拟成功响应
+          setTimeout(() => {
+            alert("帖子发布成功！");
+            window.location.href = "post-detail.html?id=1"; // 这里假设跳转到ID为1的帖子
+          }, 1000);
+        });
+
+        // 保存草稿
+        $("#saveAsDraft").click(function () {
+          let title = $("#postTitle").val().trim();
+          let content = $("#postContent").summernote("code");
+
+          // 保存草稿的基本验证
+          if (title === "" && $(content).text().trim() === "") {
+            alert("标题或内容不能为空");
+            return;
+          }
+
+          // 模拟保存草稿
+          localStorage.setItem("draft_title", title);
+          localStorage.setItem("draft_content", content);
+          localStorage.setItem("draft_tags", $("#selectedTags").val());
+
+          alert("草稿已保存");
+        });
+
+        // 检查是否有草稿
+        function loadDraft() {
+          let draftTitle = localStorage.getItem("draft_title");
+          let draftContent = localStorage.getItem("draft_content");
+          let draftTags = localStorage.getItem("draft_tags");
+
+          if (draftTitle || draftContent) {
+            if (confirm("检测到您有未发布的草稿，是否加载？")) {
+              if (draftTitle) $("#postTitle").val(draftTitle);
+              if (draftContent)
+                $("#postContent").summernote("code", draftContent);
+
+              if (draftTags) {
+                let tags = draftTags.split(",");
+                tags.forEach((tag) => {
+                  $(".tag-selector .badge").each(function () {
+                    if ($(this).data("value") === tag) {
+                      $(this).addClass("selected");
+                    }
+                  });
+                });
+                $("#selectedTags").val(draftTags);
+              }
+            } else {
+              // 清除草稿
+              localStorage.removeItem("draft_title");
+              localStorage.removeItem("draft_content");
+              localStorage.removeItem("draft_tags");
+            }
+          }
+        }
+
+        // 页面加载时检查草稿
+        loadDraft();
+      });
+    </script>
+  </body>
+</html>
